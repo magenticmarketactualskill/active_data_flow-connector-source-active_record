@@ -6,7 +6,7 @@ module ActiveDataFlow
       class ActiveRecordSource < ::ActiveDataFlow::Connector::Source::Base
         attr_reader :model_class, :scope_name, :scope_params, :batch_size
 
-        def initialize(scope:, batch_size: 100, scope_params: [])
+        def initialize(scope:, scope_name: nil, batch_size: 100, scope_params: [])
           raise ArgumentError, "scope is required" if scope.nil?
           
           # Validate that this is a named scope, not an ad-hoc where clause
@@ -19,7 +19,7 @@ module ActiveDataFlow
           
           # Extract model for serialization
           @model_class = scope.model
-          @scope_name = scope.name
+          @scope_name = scope_name || "unknown"
           @scope_params = scope_params
           
           @batch_size = batch_size
@@ -56,6 +56,7 @@ module ActiveDataFlow
           
           new(
             scope: scope,
+            scope_name: data["scope_name"],
             scope_params: data["scope_params"],
             batch_size: data["batch_size"]
           )
