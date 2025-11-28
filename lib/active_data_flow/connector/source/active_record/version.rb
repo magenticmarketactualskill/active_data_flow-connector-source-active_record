@@ -4,7 +4,7 @@ module ActiveDataFlow
   module Connector
     module Source
       module ActiveRecord
-        VERSION = "0.1.16"
+        VERSION = "0.1.17"
       end
     end
   end
