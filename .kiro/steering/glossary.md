@@ -1,1 +1,1 @@
-../../../../.kiro/glossary.md
+../../../../.kiro/steering/glossary.md
