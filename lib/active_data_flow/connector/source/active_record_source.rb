@@ -33,8 +33,14 @@ module ActiveDataFlow
           )
         end
 
-        def each(&block)
-          scope.find_each(batch_size: batch_size, &block)
+        def each(start_id: nil, &block)
+          scope_with_cursor = if start_id
+            scope.where("#{model_class.table_name}.id > ?", start_id)
+          else
+            scope
+          end
+          
+          scope_with_cursor.find_each(batch_size: batch_size, &block)
         end
 
         def close
